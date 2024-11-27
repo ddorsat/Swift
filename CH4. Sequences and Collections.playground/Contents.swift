@@ -1,0 +1,1 @@
+var intVar = 12
