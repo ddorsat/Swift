@@ -107,7 +107,8 @@ func generateWallet(walletLength: Int) -> [Int] {
     return wallet
 }
 
-func sumOfBanknotes(banknotes wallet: (Int) -> [Int], walletLength: Int) -> Int? {
+func sumOfBanknotes(banknotes wallet: (Int) -> [Int], walletLength: Int) -> Int?
+{
     let banknotesArray = wallet(walletLength)
     var sum: Int = 0
     for i in banknotesArray {
@@ -118,4 +119,56 @@ func sumOfBanknotes(banknotes wallet: (Int) -> [Int], walletLength: Int) -> Int?
 
 sumOfBanknotes(banknotes: generateWallet, walletLength: 20)
 
+func oneStep(coordinates: inout (Int, Int), stepType: String) {
+    func up(coords: inout (Int, Int)) {
+        coords = (coords.0 + 1, coords.1)
+    }
+    func right(coords: inout (Int, Int)) {
+        coords = (coords.0, coords.1 + 1)
+    }
+    func down(coords: inout (Int, Int)) {
+        coords = (coords.0 - 1, coords.1)
+    }
+    func left(coords: inout (Int, Int)) {
+        coords = (coords.0, coords.1 - 1)
+    }
 
+    switch stepType {
+    case "up":
+        up(coords: &coordinates)
+    case "down":
+        down(coords: &coordinates)
+    case "right":
+        right(coords: &coordinates)
+    case "left":
+        left(coords: &coordinates)
+    default: break
+    }
+}
+
+var coordinates = (10, 0)
+oneStep(coordinates: &coordinates, stepType: "up")
+oneStep(coordinates: &coordinates, stepType: "right")
+oneStep(coordinates: &coordinates, stepType: "right")
+oneStep(coordinates: &coordinates, stepType: "down")
+coordinates
+
+func say() -> String {
+    return "hello"
+}
+
+func say() -> Int {
+    return 10
+}
+
+let saying: String = say()
+let sayingNumber: Int = say() + 10
+
+func countdown(firstNum num: Int) {
+    print(num)
+    if num > 0 {
+        countdown(firstNum: num - 1)
+    }
+}
+
+print(countdown(firstNum: 5))
