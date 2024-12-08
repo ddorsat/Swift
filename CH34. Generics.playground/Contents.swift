@@ -59,3 +59,102 @@ extension Stack {
 StringStorage.replaceFirst(10)
 StringStorage.items
 
+func search2<T1, T2>(value: T1, collection: T2) -> Bool
+where T1: Comparable, T2: Collection, T1 == T2.Element {
+    for item in collection {
+        if item == value {
+            return true
+        }
+    }
+    return false
+}
+
+struct Stack1<T> {
+    var items: [T] = []
+
+    mutating func push(_ item: T) {
+        items.insert(contentsOf: [item], at: 0)
+    }
+
+    mutating func pop() -> T {
+        items.removeFirst()
+    }
+
+}
+
+protocol Stack1Protocol {
+    associatedtype ItemType
+
+    var items: [ItemType] { get set }
+    mutating func push(item: ItemType)
+    mutating func pop() -> ItemType
+}
+
+struct Stack2<TA>: Stack1Protocol {
+    typealias ItemType = TA
+
+    var items: [TA] = []
+
+    mutating func push(item: TA) {
+        items.insert(contentsOf: [item], at: 0)
+    }
+
+    mutating func pop() -> TA {
+        items.removeFirst()
+    }
+}
+
+var array2 = [5, 6, 1, 2, 4]
+
+var stack2 = Stack2(items: array2)
+stack2.push(item: 9)
+stack2.pop()
+stack2.items
+
+protocol StackProtocol2 {
+    associatedtype ItemType
+
+    var items: [ItemType] { get set }
+
+    mutating func push(_ item: ItemType)
+
+    mutating func pop() -> ItemType
+}
+
+extension StackProtocol2 {
+    mutating func push(_ item: ItemType) {
+        items.insert(contentsOf: [item], at: 0)
+    }
+
+    mutating func pop() -> ItemType {
+        items.removeFirst()
+    }
+}
+
+struct Stack3<T>: StackProtocol2 {
+    typealias ItemType = T
+    var items: [T]
+}
+
+var stack3 = Stack3(items: array2)
+
+protocol Vehicle {
+    associatedtype Identifier
+    var uid: Identifier { get set }
+}
+
+struct Car: Vehicle {
+    var uid: Int
+}
+
+struct Truck: Vehicle {
+    var uid: String
+}
+
+func getCar() -> some Vehicle {
+    return Car(uid: 93)
+}
+
+let myCar = getCar()
+
+
